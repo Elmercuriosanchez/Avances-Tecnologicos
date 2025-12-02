@@ -1,0 +1,519 @@
+/* Reset y estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: #fff;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Encabezado */
+header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+header h1 {
+    font-size: 2.8rem;
+    margin-bottom: 10px;
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    display: inline-block;
+}
+
+.subtitle {
+    font-size: 1.2rem;
+    opacity: 0.8;
+}
+
+/* Layout del juego */
+.game-layout {
+    display: flex;
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.game-sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.game-area {
+    flex: 2;
+}
+
+/* Paneles */
+.stats-panel,
+.controls-panel,
+.leaderboard-panel,
+.weapon-panel,
+.powerups-panel {
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    padding: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+h2 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #00dbde;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #fc00ff;
+}
+
+/* Estadísticas */
+.stat {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat-label {
+    font-weight: 600;
+}
+
+.stat-value {
+    font-weight: 700;
+    color: #00dbde;
+    font-size: 1.2rem;
+}
+
+/* Botones */
+.btn {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+    width: 100%;
+}
+
+.btn-start {
+    background: linear-gradient(90deg, #00b09b, #96c93d);
+    color: white;
+}
+
+.btn-pause {
+    background: linear-gradient(90deg, #ff7e5f, #feb47b);
+    color: white;
+}
+
+.btn-reset {
+    background: linear-gradient(90deg, #8e2de2, #4a00e0);
+    color: white;
+}
+
+.btn-save {
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    color: white;
+    padding: 8px 15px;
+    font-size: 0.9rem;
+    width: auto;
+}
+
+.btn-play-again {
+    background: linear-gradient(90deg, #00b09b, #96c93d);
+    color: white;
+    margin-top: 20px;
+}
+
+.btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Dificultad */
+.difficulty-options {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.difficulty-option {
+    flex: 1;
+    text-align: center;
+}
+
+.difficulty-option input {
+    display: none;
+}
+
+.difficulty-label {
+    display: block;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.difficulty-option input:checked + .difficulty-label {
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    font-weight: bold;
+}
+
+/* Instrucciones */
+.instructions ul {
+    padding-left: 20px;
+    margin-top: 10px;
+}
+
+.instructions li {
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+/* Área del juego */
+.game-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    border: 3px solid rgba(255, 255, 255, 0.1);
+}
+
+#game-canvas {
+    background: #0a1929;
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+
+.crosshair {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+}
+
+.crosshair::before,
+.crosshair::after {
+    content: '';
+    position: absolute;
+    background: #00dbde;
+    box-shadow: 0 0 5px #00dbde;
+}
+
+.crosshair::before {
+    width: 2px;
+    height: 20px;
+    left: 11px;
+    top: 2px;
+}
+
+.crosshair::after {
+    width: 20px;
+    height: 2px;
+    left: 2px;
+    top: 11px;
+}
+
+/* Pantallas de inicio/fin */
+.game-start,
+.game-over {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(10, 25, 41, 0.9);
+    z-index: 50;
+    padding: 30px;
+    text-align: center;
+}
+
+.game-start h2,
+.game-over h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #00dbde;
+}
+
+.game-start p,
+.game-over p {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+.hint {
+    font-size: 1rem;
+    color: #fc00ff;
+    margin-top: 20px;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* Formulario para guardar puntuación */
+.save-score-form {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.save-score-form label {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+#player-name {
+    padding: 12px 20px;
+    border-radius: 8px;
+    border: 2px solid #00dbde;
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    font-size: 1.1rem;
+    width: 80%;
+    max-width: 300px;
+    text-align: center;
+}
+
+#player-name::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+/* Tabla de líderes */
+.leaderboard {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.leaderboard-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 15px;
+    margin-bottom: 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    border-left: 4px solid #00dbde;
+}
+
+.leaderboard-item:nth-child(1) {
+    border-left-color: gold;
+    background: rgba(255, 215, 0, 0.1);
+}
+
+.leaderboard-item:nth-child(2) {
+    border-left-color: silver;
+    background: rgba(192, 192, 192, 0.1);
+}
+
+.leaderboard-item:nth-child(3) {
+    border-left-color: #cd7f32;
+    background: rgba(205, 127, 50, 0.1);
+}
+
+.player-info {
+    font-weight: bold;
+}
+
+.player-score {
+    color: #00dbde;
+    font-weight: bold;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #fc00ff;
+}
+
+/* Selector de arma */
+.weapon-selector {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.weapon-option {
+    flex: 1;
+    text-align: center;
+    padding: 15px 10px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.weapon-option.active {
+    background: linear-gradient(90deg, #00dbde, #fc00ff);
+    font-weight: bold;
+}
+
+.weapon-stats {
+    margin-top: 15px;
+}
+
+.weapon-stat {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+}
+
+/* Power-ups */
+.powerups-list {
+    margin-bottom: 15px;
+}
+
+.powerup {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    margin-bottom: 10px;
+    background: rgba(0, 219, 222, 0.1);
+    border-radius: 8px;
+    border-left: 4px solid #fc00ff;
+}
+
+.powerup i {
+    color: #fc00ff;
+    font-size: 1.2rem;
+}
+
+.powerup-hint {
+    font-size: 0.8rem;
+    opacity: 0.7;
+    text-align: center;
+}
+
+/* Pie de página */
+footer {
+    text-align: center;
+    padding: 20px;
+    margin-top: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.footer-links {
+    margin-top: 10px;
+}
+
+.footer-links a {
+    color: #00dbde;
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease;
+}
+
+.footer-links a:hover {
+    color: #fc00ff;
+    text-decoration: underline;
+}
+
+/* Responsividad */
+@media (max-width: 1200px) {
+    .game-layout {
+        flex-direction: column;
+    }
+    
+    .game-sidebar {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+    
+    .stats-panel,
+    .controls-panel,
+    .leaderboard-panel,
+    .weapon-panel,
+    .powerups-panel {
+        flex: 1;
+        min-width: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2rem;
+    }
+    
+    .game-sidebar {
+        flex-direction: column;
+    }
+    
+    .game-canvas-container {
+        height: 500px;
+    }
+}
+
+/* Animaciones */
+@keyframes targetHit {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
+
+@keyframes scorePopup {
+    0% { transform: translateY(0) scale(0.5); opacity: 0; }
+    50% { transform: translateY(-20px) scale(1); opacity: 1; }
+    100% { transform: translateY(-40px) scale(0.5); opacity: 0; }
+}

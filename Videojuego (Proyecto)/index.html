@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Práctica de Puntería - Juego de Disparos</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-crosshairs"></i> Entrenamiento de Puntería</h1>
+            <p class="subtitle">Practica tu precisión en este juego de disparos</p>
+        </header>
+        
+        <div class="game-layout">
+            <div class="game-sidebar">
+                <div class="stats-panel">
+                    <h2><i class="fas fa-chart-line"></i> Estadísticas</h2>
+                    <div class="stat">
+                        <span class="stat-label">Puntuación:</span>
+                        <span id="score" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Tiempo:</span>
+                        <span id="time" class="stat-value">60s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Precisión:</span>
+                        <span id="accuracy" class="stat-value">0%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Disparos:</span>
+                        <span id="shots" class="stat-value">0/0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Objetivos:</span>
+                        <span id="targets" class="stat-value">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Nivel:</span>
+                        <span id="level" class="stat-value">1</span>
+                    </div>
+                </div>
+                
+                <div class="controls-panel">
+                    <h2><i class="fas fa-gamepad"></i> Controles</h2>
+                    <button id="start-btn" class="btn btn-start">
+                        <i class="fas fa-play"></i> Iniciar Juego
+                    </button>
+                    <button id="pause-btn" class="btn btn-pause" disabled>
+                        <i class="fas fa-pause"></i> Pausar
+                    </button>
+                    <button id="reset-btn" class="btn btn-reset">
+                        <i class="fas fa-redo"></i> Reiniciar
+                    </button>
+                    
+                    <div class="difficulty">
+                        <h3><i class="fas fa-sliders-h"></i> Dificultad</h3>
+                        <div class="difficulty-options">
+                            <label class="difficulty-option">
+                                <input type="radio" name="difficulty" value="easy" checked>
+                                <span class="difficulty-label">Fácil</span>
+                            </label>
+                            <label class="difficulty-option">
+                                <input type="radio" name="difficulty" value="medium">
+                                <span class="difficulty-label">Medio</span>
+                            </label>
+                            <label class="difficulty-option">
+                                <input type="radio" name="difficulty" value="hard">
+                                <span class="difficulty-label">Difícil</span>
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="instructions">
+                        <h3><i class="fas fa-info-circle"></i> Instrucciones</h3>
+                        <ul>
+                            <li>Haz clic en los objetivos para disparar</li>
+                            <li>Gana puntos por cada acierto</li>
+                            <li>Los objetivos pequeños dan más puntos</li>
+                            <li>¡Cuidado con los objetivos falsos!</li>
+                            <li>Tienes 60 segundos para lograr la mayor puntuación</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-area">
+                <div class="game-canvas-container">
+                    <canvas id="game-canvas" width="800" height="600"></canvas>
+                    <div id="crosshair" class="crosshair"></div>
+                    
+                    <div id="game-over" class="game-over hidden">
+                        <h2>¡Juego Terminado!</h2>
+                        <p>Tu puntuación: <span id="final-score">0</span></p>
+                        <p>Precisión: <span id="final-accuracy">0%</span></p>
+                        
+                        <div class="save-score-form">
+                            <label for="player-name">Guardar puntuación:</label>
+                            <input type="text" id="player-name" placeholder="Tu nombre" maxlength="20">
+                            <button id="save-score-btn" class="btn btn-save">
+                                <i class="fas fa-save"></i> Guardar
+                            </button>
+                        </div>
+                        
+                        <button id="play-again-btn" class="btn btn-play-again">
+                            <i class="fas fa-play-circle"></i> Jugar de Nuevo
+                        </button>
+                    </div>
+                    
+                    <div id="game-start" class="game-start">
+                        <h2>Entrenamiento de Puntería</h2>
+                        <p>¡Haz clic en Iniciar para comenzar!</p>
+                        <p class="hint">Mueve el mouse para apuntar, haz clic para disparar</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="game-sidebar">
+                <div class="leaderboard-panel">
+                    <h2><i class="fas fa-trophy"></i> Mejores Puntuaciones</h2>
+                    <div id="leaderboard" class="leaderboard">
+                        <div class="loading">Cargando puntuaciones...</div>
+                    </div>
+                </div>
+                
+                <div class="weapon-panel">
+                    <h2><i class="fas fa-gun"></i> Arma</h2>
+                    <div class="weapon-selector">
+                        <div class="weapon-option active" data-weapon="pistol">
+                            <i class="fas fa-gun"></i>
+                            <span>Pistola</span>
+                        </div>
+                        <div class="weapon-option" data-weapon="rifle">
+                            <i class="fas fa-rifle"></i>
+                            <span>Rifle</span>
+                        </div>
+                        <div class="weapon-option" data-weapon="sniper">
+                            <i class="fas fa-crosshairs"></i>
+                            <span>Francotirador</span>
+                        </div>
+                    </div>
+                    
+                    <div class="weapon-stats">
+                        <div class="weapon-stat">
+                            <span>Daño:</span>
+                            <span id="weapon-damage">10</span>
+                        </div>
+                        <div class="weapon-stat">
+                            <span>Velocidad:</span>
+                            <span id="weapon-speed">Normal</span>
+                        </div>
+                        <div class="weapon-stat">
+                            <span>Precisión:</span>
+                            <span id="weapon-accuracy">Alta</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="powerups-panel">
+                    <h2><i class="fas fa-bolt"></i> Power-ups</h2>
+                    <div class="powerups-list">
+                        <div class="powerup">
+                            <i class="fas fa-clock"></i>
+                            <span>Tiempo Extra: +5s</span>
+                        </div>
+                        <div class="powerup">
+                            <i class="fas fa-bullseye"></i>
+                            <span>Precisión Doble: 30s</span>
+                        </div>
+                        <div class="powerup">
+                            <i class="fas fa-rocket"></i>
+                            <span>Disparo Rápido: 20s</span>
+                        </div>
+                    </div>
+                    <p class="powerup-hint">Aparecen aleatoriamente durante el juego</p>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Juego de Práctica de Puntería - Desarrollado con HTML5, CSS3, JavaScript y Python</p>
+            <p class="footer-links">
+                <a href="#"><i class="fas fa-code"></i> Ver Código</a> | 
+                <a href="#"><i class="fas fa-question-circle"></i> Ayuda</a> | 
+                <a href="#"><i class="fas fa-cog"></i> Configuración</a>
+            </p>
+        </footer>
+    </div>
+    
+    <script src="game.js"></script>
+</body>
+</html>
